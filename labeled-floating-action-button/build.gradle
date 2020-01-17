@@ -35,5 +35,5 @@ dependencies {
 
 apply plugin: 'com.github.dcendents.android-maven'
 
-group = 'com.github.Buzzvil'
+group = 'com.github.hseung'
 version = rootProject.ext.versionName
