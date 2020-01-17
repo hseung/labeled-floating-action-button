@@ -1,2 +1,2 @@
-include ':sample', ':library'
+include ':sample', ':labeled-floating-action-button'
 rootProject.name='LabeledFloatingActionButton'
