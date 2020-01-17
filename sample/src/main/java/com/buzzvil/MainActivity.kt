@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.buzzvil.labeledfab.LabelPosition
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
                     dpToPx(18f),
                     Color.WHITE
                 )
+                fab.labelPosition = LabelPosition.BOTTOM
+
                 this.isDialFAB = false
             } else {
                 fab.setImageResourceWithLabel(
@@ -31,6 +34,8 @@ class MainActivity : AppCompatActivity() {
                     dpToPx(18f),
                     Color.LTGRAY
                 )
+                fab.labelPosition = LabelPosition.TOP
+
                 this.isDialFAB = true
             }
         }

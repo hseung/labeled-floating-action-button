@@ -19,6 +19,18 @@ import androidx.annotation.DrawableRes
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class LabeledFloatingActionButton : FloatingActionButton {
+    private var icon = 0
+    private var labelText: String? = null
+    private var labelTextSizePx = 0
+    private var labelTextColor = 0
+    var labelPosition = LabelPosition.BOTTOM
+        set (value) {
+            if (field != value) {
+                field = value
+                setImageWithLabel()
+            }
+        }
+
     constructor(ctx: Context) : super(ctx) {
         init(null)
     }
@@ -32,41 +44,46 @@ class LabeledFloatingActionButton : FloatingActionButton {
     }
 
     fun setImageResourceWithLabel(@DrawableRes resId: Int, label: String, textSizePx: Int, @ColorInt textColor: Int) {
-        scaleType = ScaleType.FIT_CENTER
-        setImageDrawable(createFABDrawableWithText(resId, label, textSizePx, textColor))
+        icon = resId
+        labelText = label
+        labelTextSizePx = textSizePx
+        labelTextColor = textColor
+
+        setImageWithLabel()
     }
 
     private fun init(attrs: AttributeSet?) {
-        var text: String?
-        var textSizePx: Int
-        var textColor: Int
-        var icon: Int
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.LabeledFloatingActionButton,
             0, 0).apply {
 
             try {
-                text = getString(R.styleable.LabeledFloatingActionButton_labeledFabText)
-                textSizePx = getDimensionPixelSize(R.styleable.LabeledFloatingActionButton_labeledFabTextSize, 0)
-                textColor = getColor(R.styleable.LabeledFloatingActionButton_labeledFabTextColor, Color.BLACK)
+                labelText = getString(R.styleable.LabeledFloatingActionButton_labeledFabText)
+                labelTextSizePx = getDimensionPixelSize(R.styleable.LabeledFloatingActionButton_labeledFabTextSize, 0)
+                labelTextColor = getColor(R.styleable.LabeledFloatingActionButton_labeledFabTextColor, Color.BLACK)
                 icon = getResourceId(R.styleable.LabeledFloatingActionButton_labeledFabIcon, 0)
+                labelPosition = LabelPosition.fromInt(getInteger(R.styleable.LabeledFloatingActionButton_labeledFabTextPosition, 1))
             } finally {
                 recycle()
             }
         }
 
-        if (!TextUtils.isEmpty(text) && textSizePx > 0 && icon > 0) {
-            scaleType = ScaleType.FIT_CENTER
-            setImageDrawable(createFABDrawableWithText(icon, text!!, textSizePx, textColor))
+        if (!TextUtils.isEmpty(labelText) && labelTextSizePx > 0 && icon > 0) {
+            setImageWithLabel()
         } else if (icon > 0) {
             setImageResource(icon)
         }
     }
 
+    private fun setImageWithLabel() {
+        scaleType = ScaleType.FIT_CENTER
+        setImageDrawable(createFABDrawableWithText(icon, labelText!!, labelTextSizePx, labelTextColor, labelPosition))
+    }
+
     private fun createFABDrawableWithText(
         @DrawableRes iconResId: Int, text: String,
-        textSizePx: Int, @ColorInt textColor: Int
+        textSizePx: Int, @ColorInt textColor: Int, labelPosition: LabelPosition
     ): Drawable? {
         val linearLayout = LinearLayout(context).apply {
             layoutParams = LinearLayout.LayoutParams(
@@ -96,8 +113,10 @@ class LabeledFloatingActionButton : FloatingActionButton {
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
         )
+        var textViewIndex = if (labelPosition == LabelPosition.BOTTOM) 1 else 0
         linearLayout.addView(
             textView,
+            textViewIndex,
             LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT

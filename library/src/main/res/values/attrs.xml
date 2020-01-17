@@ -5,5 +5,9 @@
         <attr name="labeledFabTextSize" format="dimension"/>
         <attr name="labeledFabTextColor" format="color|reference"/>
         <attr name="labeledFabIcon" format="reference" />
+        <attr name="labeledFabTextPosition" format="enum" >
+            <enum name="top" value="0" />
+            <enum name="bottom" value="1" />
+        </attr>
     </declare-styleable>
 </resources>
