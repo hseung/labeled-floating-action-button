@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.buzzvil.labeledfab.LabelPosition
+import com.buzzvil.labeledfab.LabeledFloatingActionButtonConfig
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,25 +19,25 @@ class MainActivity : AppCompatActivity() {
 
         fab.setOnClickListener { view ->
             if (isDialFAB) {
-                fab.setImageResourceWithLabel(
-                    android.R.drawable.ic_dialog_email,
-                    "Mail",
-                    dpToPx(18f),
-                    Color.WHITE
+                fab.config = LabeledFloatingActionButtonConfig(
+                    icon = android.R.drawable.ic_dialog_email,
+                    labelText = "Mail",
+                    labelTextSizePx = dpToPx(18f),
+                    labelTextColor = Color.WHITE,
+                    labelPosition = LabelPosition.BOTTOM,
+                    labelTextPadding = 0
                 )
-                fab.labelPosition = LabelPosition.BOTTOM
-                fab.labelTextPadding = 0
 
                 this.isDialFAB = false
             } else {
-                fab.setImageResourceWithLabel(
-                    android.R.drawable.ic_dialog_dialer,
-                    "Dialer",
-                    dpToPx(18f),
-                    Color.LTGRAY
+                fab.config = LabeledFloatingActionButtonConfig(
+                    icon = android.R.drawable.ic_dialog_dialer,
+                    labelText = "Dialer",
+                    labelTextSizePx = dpToPx(18f),
+                    labelTextColor = Color.LTGRAY,
+                    labelPosition = LabelPosition.TOP,
+                    labelTextPadding = dpToPx(5f)
                 )
-                fab.labelPosition = LabelPosition.TOP
-                fab.labelTextPadding = dpToPx(5f)
 
                 this.isDialFAB = true
             }

@@ -22,7 +22,10 @@
 
 # Based on: http://proguard.sourceforge.net/manual/examples.html#library
 
--keep class com.buzzvil.labeledfab.LabeledFloatingActionButton {
+-keep class com.buzzvil.labeledfab.* {
+    public protected *;
+}
+-keep enum com.buzzvil.labeledfab.* {
     public protected *;
 }
 

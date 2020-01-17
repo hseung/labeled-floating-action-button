@@ -5,6 +5,6 @@ enum class LabelPosition(val value: Int) {
     BOTTOM(1);
 
     companion object {
-        fun fromInt(value: Int) = LabelPosition.values().first { it.value == value }
+        fun fromInt(value: Int) = values().first { it.value == value }
     }
 }

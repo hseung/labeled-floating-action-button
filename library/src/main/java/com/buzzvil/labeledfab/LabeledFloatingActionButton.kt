@@ -19,23 +19,10 @@ import androidx.annotation.DrawableRes
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class LabeledFloatingActionButton : FloatingActionButton {
-    private var icon = 0
-    private var labelText: String? = null
-    private var labelTextSizePx = 0
-    private var labelTextColor = 0
-    var labelTextPadding = 0
+    var config: LabeledFloatingActionButtonConfig? = null
         set (value) {
-            if (field != value) {
-                field = value
-                setImageWithLabel()
-            }
-        }
-    var labelPosition = LabelPosition.BOTTOM
-        set (value) {
-            if (field != value) {
-                field = value
-                setImageWithLabel()
-            }
+            field = value
+            setDrawableWithConfig()
         }
 
     constructor(ctx: Context) : super(ctx) {
@@ -50,23 +37,21 @@ class LabeledFloatingActionButton : FloatingActionButton {
         init(attrs)
     }
 
-    fun setImageResourceWithLabel(@DrawableRes resId: Int, label: String, textSizePx: Int, @ColorInt textColor: Int) {
-        icon = resId
-        labelText = label
-        labelTextSizePx = textSizePx
-        labelTextColor = textColor
-
-        setImageWithLabel()
-    }
-
     private fun init(attrs: AttributeSet?) {
+        var icon = 0
+        var labelText = ""
+        var labelTextSizePx = 0
+        var labelTextColor = 0
+        var labelTextPadding = 0
+        var labelPosition: LabelPosition
+
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.LabeledFloatingActionButton,
             0, 0).apply {
 
             try {
-                labelText = getString(R.styleable.LabeledFloatingActionButton_labeledFabText)
+                labelText = getString(R.styleable.LabeledFloatingActionButton_labeledFabText) ?: ""
                 labelTextSizePx = getDimensionPixelSize(R.styleable.LabeledFloatingActionButton_labeledFabTextSize, 0)
                 labelTextColor = getColor(R.styleable.LabeledFloatingActionButton_labeledFabTextColor, Color.BLACK)
                 icon = getResourceId(R.styleable.LabeledFloatingActionButton_labeledFabIcon, 0)
@@ -78,25 +63,44 @@ class LabeledFloatingActionButton : FloatingActionButton {
         }
 
         if (!TextUtils.isEmpty(labelText) && labelTextSizePx > 0 && icon > 0) {
-            setImageWithLabel()
+            config = LabeledFloatingActionButtonConfig(
+                icon = icon,
+                labelText = labelText,
+                labelTextSizePx = labelTextSizePx,
+                labelTextColor = labelTextColor,
+                labelTextPadding = labelTextPadding,
+                labelPosition = labelPosition
+            )
         } else if (icon > 0) {
             setImageResource(icon)
         }
     }
 
-    private fun setImageWithLabel() {
-        scaleType = ScaleType.FIT_CENTER
-        setImageDrawable(createFABDrawableWithText(icon, labelText!!, labelTextSizePx, labelTextColor, labelPosition))
+    private fun setDrawableWithConfig() {
+        config?.apply {
+            scaleType = ScaleType.FIT_CENTER
+            setImageDrawable(
+                createFABDrawableWithText(
+                    icon,
+                    labelText,
+                    labelTextSizePx,
+                    labelTextColor,
+                    labelPosition,
+                    labelTextPadding
+                )
+            )
+        }
     }
 
     private fun createFABDrawableWithText(
         @DrawableRes iconResId: Int, text: String,
-        textSizePx: Int, @ColorInt textColor: Int, labelPosition: LabelPosition
+        textSizePx: Int, @ColorInt textColor: Int,
+        labelPosition: LabelPosition, labelTextPadding: Int
     ): Drawable? {
         val linearLayout = LinearLayout(context).apply {
             layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
             )
             orientation = LinearLayout.VERTICAL
         }
@@ -151,5 +155,4 @@ class LabeledFloatingActionButton : FloatingActionButton {
         linearLayout.draw(canvas)
         return BitmapDrawable(bitmap)
     }
-
 }
