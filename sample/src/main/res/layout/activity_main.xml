@@ -23,7 +23,6 @@
     <include layout="@layout/content_main" />
 
     <com.buzzvil.labeledfab.LabeledFloatingActionButton
-        style="@style/Widget.Design.FloatingActionButton"
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,9 +31,10 @@
         app:maxImageSize="46dp"
         app:fabCustomSize="72dp"
         app:labeledFabText="Mail"
-        app:labeledFabTextColor="#eeeeee"
+        app:labeledFabTextColor="@android:color/white"
         app:labeledFabTextSize="18dp"
         app:labeledFabTextPadding="1dp"
+        app:labeledFabTextPosition="bottom"
         app:labeledFabIcon="@android:drawable/ic_dialog_email"
         />
 
