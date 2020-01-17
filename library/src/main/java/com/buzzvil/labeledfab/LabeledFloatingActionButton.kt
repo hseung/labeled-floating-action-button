@@ -23,6 +23,13 @@ class LabeledFloatingActionButton : FloatingActionButton {
     private var labelText: String? = null
     private var labelTextSizePx = 0
     private var labelTextColor = 0
+    var labelTextPadding = 0
+        set (value) {
+            if (field != value) {
+                field = value
+                setImageWithLabel()
+            }
+        }
     var labelPosition = LabelPosition.BOTTOM
         set (value) {
             if (field != value) {
@@ -64,6 +71,7 @@ class LabeledFloatingActionButton : FloatingActionButton {
                 labelTextColor = getColor(R.styleable.LabeledFloatingActionButton_labeledFabTextColor, Color.BLACK)
                 icon = getResourceId(R.styleable.LabeledFloatingActionButton_labeledFabIcon, 0)
                 labelPosition = LabelPosition.fromInt(getInteger(R.styleable.LabeledFloatingActionButton_labeledFabTextPosition, 1))
+                labelTextPadding = getDimensionPixelSize(R.styleable.LabeledFloatingActionButton_labeledFabTextPadding, 0)
             } finally {
                 recycle()
             }
@@ -103,7 +111,11 @@ class LabeledFloatingActionButton : FloatingActionButton {
             setTextSize(TypedValue.COMPLEX_UNIT_PX, textSizePx.toFloat())
             setText(text)
             gravity = Gravity.CENTER
-            setPadding(0, 0, 0, 0)
+            if (labelPosition == LabelPosition.TOP) {
+                setPadding(0, 0, 0, labelTextPadding)
+            } else {
+                setPadding(0, labelTextPadding, 0, 0)
+            }
         }
 
         linearLayout.addView(

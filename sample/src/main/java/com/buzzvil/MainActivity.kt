@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
                     Color.WHITE
                 )
                 fab.labelPosition = LabelPosition.BOTTOM
+                fab.labelTextPadding = 0
 
                 this.isDialFAB = false
             } else {
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                     Color.LTGRAY
                 )
                 fab.labelPosition = LabelPosition.TOP
+                fab.labelTextPadding = dpToPx(5f)
 
                 this.isDialFAB = true
             }

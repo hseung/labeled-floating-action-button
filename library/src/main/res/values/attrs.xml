@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="LabeledFloatingActionButton">
+        <attr name="labeledFabIcon" format="reference" />
         <attr name="labeledFabText" format="string"/>
         <attr name="labeledFabTextSize" format="dimension"/>
         <attr name="labeledFabTextColor" format="color|reference"/>
-        <attr name="labeledFabIcon" format="reference" />
+        <attr name="labeledFabTextPadding" format="dimension"/>
         <attr name="labeledFabTextPosition" format="enum" >
             <enum name="top" value="0" />
             <enum name="bottom" value="1" />
