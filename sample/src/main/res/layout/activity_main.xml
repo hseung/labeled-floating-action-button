@@ -29,7 +29,20 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:scaleType="fitCenter"
+        app:maxImageSize="46dp"
+        app:fabCustomSize="72dp"
+        app:labeledFabText="Mail"
+        app:labeledFabTextColor="#eeeeee"
+        app:labeledFabTextSize="15dp"
+        app:labeledFabIcon="@android:drawable/ic_dialog_email"
+        />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_dialog_email"
         app:maxImageSize="46dp"
         app:fabCustomSize="72dp"
         />

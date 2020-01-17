@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LabeledFloatingActionButton">
+        <attr name="labeledFabText" format="string"/>
+        <attr name="labeledFabTextSize" format="dimension"/>
+        <attr name="labeledFabTextColor" format="color|reference"/>
+        <attr name="labeledFabIcon" format="reference" />
+    </declare-styleable>
+</resources>
