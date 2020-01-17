@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
@@ -30,6 +29,11 @@ class LabeledFloatingActionButton : FloatingActionButton {
 
     constructor(ctx: Context, attrs: AttributeSet, defStyleAttr: Int) : super(ctx, attrs, defStyleAttr) {
         init(attrs)
+    }
+
+    fun setImageResourceWithLabel(@DrawableRes resId: Int, label: String, textSizePx: Int, @ColorInt textColor: Int) {
+        scaleType = ScaleType.FIT_CENTER
+        setImageDrawable(createFABDrawableWithText(resId, label, textSizePx, textColor))
     }
 
     private fun init(attrs: AttributeSet?) {

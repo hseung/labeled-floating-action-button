@@ -33,7 +33,7 @@
         app:fabCustomSize="72dp"
         app:labeledFabText="Mail"
         app:labeledFabTextColor="#eeeeee"
-        app:labeledFabTextSize="15dp"
+        app:labeledFabTextSize="18dp"
         app:labeledFabIcon="@android:drawable/ic_dialog_email"
         />
 

@@ -1,14 +1,14 @@
 package com.buzzvil
 
+import android.graphics.Color
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private var isDialFAB = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,8 +16,23 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            if (isDialFAB) {
+                fab.setImageResourceWithLabel(
+                    android.R.drawable.ic_dialog_email,
+                    "Mail",
+                    dpToPx(18f),
+                    Color.WHITE
+                )
+                this.isDialFAB = false
+            } else {
+                fab.setImageResourceWithLabel(
+                    android.R.drawable.ic_dialog_dialer,
+                    "Dialer",
+                    dpToPx(18f),
+                    Color.LTGRAY
+                )
+                this.isDialFAB = true
+            }
         }
     }
 
@@ -35,5 +50,10 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun dpToPx(dpValue: Float): Int {
+        val scale = resources.displayMetrics.density
+        return (dpValue * scale + 0.5f).toInt()
     }
 }
